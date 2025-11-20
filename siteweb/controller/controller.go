@@ -21,7 +21,7 @@ type infoTrack struct {
 	Link       string
 }
 
-type data struct {
+type Data struct {
 	Artist string
 	Album  []album
 	Track  []infoTrack
@@ -72,7 +72,7 @@ func AlbumDamso(w http.ResponseWriter, r *http.Request) {
 		{Name: "Titre2", Cover: "", Date: "Unknow2", Number: "00"},
 		{Name: "Titre3", Cover: "", Date: "Unknow3", Number: "000"},
 	}
-	pageData := data{
+	pageData := Data{
 		Artist: "Damso",
 		Album:  albumDamso,
 		Track:  nil,
@@ -89,7 +89,7 @@ func TrackLaylow(w http.ResponseWriter, r *http.Request) {
 	trackLaylow := []infoTrack{
 		{Title: "Maladresse", CoverAlbum: "[empty]", NameAlbum: ".Raw-Z", NameArtist: "Laylow", Date: "2018", Link: "https://open.spotify.com/intl-fr/track/0nAHBAlzkyaQXUp7qTULqv"},
 	}
-	pageData := data{
+	pageData := Data{
 		Artist: "Laylow",
 		Album:  nil,
 		Track:  trackLaylow,
