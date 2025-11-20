@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TRACK LAYLOW</title>
+</head>
+<body>
+    <form action="/home" method="GET">
+    <button>HOME</button>
+    </form>
+    <form action="/track" method="GET">
+    <button>Back</button>
+    </form>
+    <h1>MALADRESSE INFO</h1>
+    <h2>track Info</h2>
+    <div>
+        {{ range .Track}}
+        <P>{{.Title}}</P>
+        <P>{{.CoverAlbum}}</P>
+        <P>{{.NameAlbum}}</P>
+        <P>{{.NameArtist}}</P>
+        <P>{{.Date}}</P>
+        <P>{{.Link}}</P>
+    </div>
+    {{ end }}
+    </body>
+</html>

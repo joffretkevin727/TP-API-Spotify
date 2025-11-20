@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ALBUM DAMSO</title>
+</head>
+<body>
+    <form action="/home" method="GET">
+    <button>HOME</button>
+    </form>
+    <form action="/album" method="GET">
+    <button>Back</button>
+    </form>
+    <h1>ALBUM DAMSO</h1>
+    {{ range .Album}}
+    <h2>Album Info</h2>
+    <div>
+        <P>{{.Name}}</P>
+        <P>{{.Cover}}</P>
+        <P>{{.Date}}</P>
+        <P>{{.Number}}</P>
+    </div>
+    {{ end }}
+    </body>
+</html>
