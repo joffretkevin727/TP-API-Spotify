@@ -1,0 +1,173 @@
+{
+	"info": {
+		"_postman_id": "d7257ecc-58dc-42af-8769-982ac7fa8ef2",
+		"name": "spotify",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "50123144",
+		"_collection_link": "https://joffretkevin727-3290674.postman.co/workspace/JOFFRET-k%C3%A9vin's-Workspace~d4ac55f7-57b2-4cbb-8fa5-5b0bbb4a3790/collection/50123144-d7257ecc-58dc-42af-8769-982ac7fa8ef2?action=share&source=collection_link&creator=50123144"
+	},
+	"item": [
+		{
+			"name": "Damso",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "BQBpKLinOTxZVpNOecd4DAAD6erlzsAut0kfm6NjQjYccG8H7r9YzNaEy_GG3ZTg2QpcXNDxLfsKeUct9Ufuplivtvfs2bM-EfS5aEfsY6QKKc7YTaOX0R3PQQv8CMlno3lQVowsGGg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					},
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "{{baseURL}}/v1/artists/2UwqpfQtNuhBwviIC0f2ie",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"v1",
+						"artists",
+						"2UwqpfQtNuhBwviIC0f2ie"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Damso_album",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "BQAsMz2iUHJtFbvViwMlGc4vOAuhMllgxyrfAQ0GcvEFuh4MX3q20FOxSUCVYMK7xqgsuN0g1wlEZ0hrRGBUO50ybDYFd8DiZto3DF2GzedC1_h3KlkMZIbUNnK4XMmNaRXATu-uNmY",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api.spotify.com/v1/artists/2UwqpfQtNuhBwviIC0f2ie/albums",
+					"protocol": "https",
+					"host": [
+						"api",
+						"spotify",
+						"com"
+					],
+					"path": [
+						"v1",
+						"artists",
+						"2UwqpfQtNuhBwviIC0f2ie",
+						"albums"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "5 TRACKS",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "BQAsMz2iUHJtFbvViwMlGc4vOAuhMllgxyrfAQ0GcvEFuh4MX3q20FOxSUCVYMK7xqgsuN0g1wlEZ0hrRGBUO50ybDYFd8DiZto3DF2GzedC1_h3KlkMZIbUNnK4XMmNaRXATu-uNmY",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/v1/albums/4beTtJKeg3ITJsiVuxkiV0/tracks?limit=5",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"v1",
+						"albums",
+						"4beTtJKeg3ITJsiVuxkiV0",
+						"tracks"
+					],
+					"query": [
+						{
+							"key": "limit",
+							"value": "5"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Impardonnable",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "BQAsMz2iUHJtFbvViwMlGc4vOAuhMllgxyrfAQ0GcvEFuh4MX3q20FOxSUCVYMK7xqgsuN0g1wlEZ0hrRGBUO50ybDYFd8DiZto3DF2GzedC1_h3KlkMZIbUNnK4XMmNaRXATu-uNmY",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/v1/tracks/6nkFbmDY84a9rejFSbIMdj",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"v1",
+						"tracks",
+						"6nkFbmDY84a9rejFSbIMdj"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "music laylow",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Maladresse",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "baseURL",
+			"value": "",
+			"type": "default"
+		}
+	]
+}
