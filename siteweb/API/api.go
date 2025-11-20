@@ -1,69 +1,134 @@
 package api
 
 import (
+	"encoding/base64"
 	"encoding/json"
 	"fmt"
 	"io"
 	"net/http"
+	"strings"
 	"time"
 )
 
-type album struct {
-	Name   string
-	Cover  string
-	Date   string
-	Number string
-}
-type infoTrack struct {
-	Title      string
-	CoverAlbum string
-	NameAlbum  string
-	NameArtist string
-	Date       string
-	Link       string
+// token info
+type TokenData struct {
+	AccessToken string `json:"access_token"`
+	TokenType   string `json:"token_type"`
+	ExpiresIn   int    `json:"expires_in"`
 }
 
-type Data struct {
-	Artist string
-	Album  []album
-	Track  []infoTrack
+// image albums
+type Image struct {
+	Url    string `json:"url"`
+	Height int    `json:"height"`
+	Width  int    `json:"width"`
 }
 
-func Api(urlApi string) (interface{}, error) {
+// info albums
+type AlbumsData struct {
+	Name         string  `json:"name"`
+	Cover        []Image `json:"images"`
+	Date         string  `json:"release_date"`
+	NumberTracks int     `json:"total"`
+	ExternalUrls struct {
+		Spotify string `json:"spotify"`
+	} `json:"external_urls"`
+}
 
-	httpClient := &http.Client{
-		Timeout: time.Second * 2, // Timeout après 2sec
+// liste albums
+type Albums struct {
+	Items []AlbumsData `json:"items"`
+}
+
+// renvoie le token d'accès en string
+func GetToken() string {
+	httpClient := http.Client{
+		Timeout: time.Second * 15,
 	}
-
-	req, errReq := http.NewRequest(http.MethodGet, urlApi, nil) // Crée la requête HTTP
+	//Partie faite a l'IA
+	payload := strings.NewReader("grant_type=client_credentials")
+	req, errReq := http.NewRequest(http.MethodPost, "https://accounts.spotify.com/api/token?grant_type=client_credentials&client_id=c2c125d4756c4d8692282454614ca245&client_secret=b6385721a0b54f268f37f939f13e442e", payload)
+	authString := base64.StdEncoding.EncodeToString([]byte("c2c125d4756c4d8692282454614ca245" + ":" + "b6385721a0b54f268f37f939f13e442e"))
+	req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
+	req.Header.Add("Authorization", "Basic "+authString)
 	if errReq != nil {
-		return nil, fmt.Errorf("erreur de création de requête: %w", errReq)
+		fmt.Println("Oupss, une erreur est survenue:", errReq.Error())
 	}
+	req.Header.Add("User-Agent", "Ynov Campus Cours")
 
-	req.Header.Add("User-Agent", "Ynov Campus Cours") // Ajoute le User-Agent
-
-	res, errResp := httpClient.Do(req) // Exécute la requête
+	res, errResp := httpClient.Do(req)
 	if errResp != nil {
-		return nil, fmt.Errorf("erreur lors de l'exécution de la requête: %w", errResp)
+		fmt.Println("Oupss, une erreur est survenue:", errResp.Error())
+		return ""
 	}
-	if res.StatusCode != http.StatusOK {
-		return nil, fmt.Errorf("requête API échouée avec le statut: %d", res.StatusCode)
+	if res.Body != nil {
+		defer res.Body.Close()
+	}
+	body, errBody := io.ReadAll(res.Body)
+	if errBody != nil {
+		fmt.Println("Oupss, une erreur est survenue", errBody.Error())
+		return ""
+	}
+	var tokenData TokenData
+	json.Unmarshal(body, &tokenData)
+	fmt.Println(tokenData.AccessToken)
+	return tokenData.AccessToken
+}
+
+// interroge la BDD Spotify et renvoie les albums
+func Api(urlapi string, token string) ([]Albums, error) {
+	// URL
+	//album Damso : https://api.spotify.com/v1/artists/2UwqpfQtNuhBwviIC0f2ie/albums"
+	fmt.Println("rentrer dans Api()")
+	//init client HTTP
+	httpClient := http.Client{
+		Timeout: time.Second * 15,
 	}
 
-	defer res.Body.Close() // Ferme le corps de la réponse après exécution
+	// Création de la requête HTTP vers l'API avec initialisation de la methode HTTP, la route et le corps de la requête
 
-	body, errBody := io.ReadAll(res.Body) // Lit et récupère le corps de la requête
+	req, errReq := http.NewRequest(http.MethodGet, urlapi, nil)
+
+	if errReq != nil {
+		fmt.Println("Oupss, une erreur est survenue:", errReq.Error())
+	}
+
+	// Ajout d'une métadonnée dans le header, User-Agent permet d'identifier l'application, système ....
+	req.Header.Add("Authorization", "Bearer "+token)
+	fmt.Println("req.Header.Add(Authorization, Bearer + token)")
+	req.Header.Add("User-Agent", "Ynov Campus Cours")
+	fmt.Println("req.Header.Add(User-Agent, Ynov Campus Cours)")
+
+	// Execution de la requête HTTP vars l'API
+
+	res, errResp := httpClient.Do(req)
+
+	if errResp != nil {
+		return nil, fmt.Errorf("Oupss, une erreur est survenue lors de l'exécution: %w", errResp)
+	}
+	if res.Body != nil {
+		defer res.Body.Close()
+	}
+
+	// Lecture et récupération du corps de la requête HTTP
+
+	body, errBody := io.ReadAll(res.Body)
+	fmt.Println("io.ReadAll(res.Body)")
+
 	if errBody != nil {
 
-		return nil, fmt.Errorf("erreur de lecture du corps de réponse: %w", errBody)
+		fmt.Println("Oupss, une erreur est survenue", errBody.Error())
 	}
-	var decodedData interface{}
-	// Déclare la variable qui va contenir les données
 
-	if err := json.Unmarshal(body, &decodedData); err != nil {
-		return nil, fmt.Errorf("erreur de decodage JSON: %w", err)
+	// Déclaration de la variable qui va contenir les données
 
+	var albumData []Albums
+
+	// Decodage des données en format JSON et ajout des donnée à la variable: decodeData
+	json.Unmarshal(body, &albumData)
+	fmt.Println("Affichage des données de l'API Spotify")
+	if albumData == nil {
+		fmt.Println("decodeData est nil")
 	}
-	// donne les données JSON
-	return decodedData, nil
+	return albumData, nil
 }
