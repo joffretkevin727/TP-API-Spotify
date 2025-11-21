@@ -1,7 +1,9 @@
-
+.bloc-espace {
+    padding-top: 50px;
+}
 
 .cadre-chanson-info {
-    width: 70%;
+    width: 50%;
     margin: 40px auto;
     padding: 20px;
     border: 2px solid #444;
@@ -15,11 +17,10 @@
     color: white;
 }
 .cover-image img {
-    width: 180px;
-    height: 180px;
+    width: 200px ;
+    height: 200px ;
     border-radius: 10px;
     object-fit: cover;
-    box-shadow: 0 0 10px rgba(255 ,255 ,255, 0,2);
 }
 .info-chanson{
     display: flex;

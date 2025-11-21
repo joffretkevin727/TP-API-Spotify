@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TRACK LAYLOW</title>
+    <title>SPOTI'FINE - Tracks Laylow</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../static/styletracks.css">
     <link rel="stylesheet" href="../static/stylecommon.css">
@@ -18,7 +18,7 @@
             <form action="/home" method="GET">
                 <button>HOME</button>
             </form>
-            <form action="/album/damso" method="GET">
+            <form action="/album/damso" method="GET" class="bouton-milieu">
                 <button>ALBUM DAMSO</button>
             </form>
             <form action="/tracks/laylow" method="GET">
@@ -26,6 +26,7 @@
             </form>
         </div>
     </nav>
+    <div class="bloc-espace">
     <div class="cadre-chanson-info">
         <div class="cover-image">
             {{with index .Album.Images 0}}
@@ -42,7 +43,7 @@
             <P><a href="{{.ExternalUrl.LinkSpotify}}">aller à SPOTIFY</a></P>
         </div>
     </div>
-
+    </div>
 </body>
 
 </html>
