@@ -1,0 +1,36 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #181818;
+}
+
+.menu-horizontale {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 100;
+    background-color: #121212;
+    padding: 10px 0;
+}
+.bloc-menu {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: space-around;
+    gap: 10px;
+    width: 100%;
+}
+.menu-horizontale form button {
+    text-decoration: none;
+    color: #E0E0E0;
+    padding: 10px 15px;
+    border: none;
+    cursor: pointer;
+    background-color: transparent;
+    display: block;
+}
+
+.menu-horizontale form button:hover {
+    background-color: #2B2B2B;
+    color: #660000
+}

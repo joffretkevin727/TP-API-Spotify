@@ -25,6 +25,9 @@ type AlbumList struct {
 
 // Album info
 type Album struct {
+	Artist []struct {
+		Name string `json:"name"`
+	} `json:"artists"`
 	Name        string  `json:"name"`
 	ReleaseDate string  `json:"release_date"`
 	TotalTracks int     `json:"total_tracks"`

@@ -1,32 +1,54 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ALBUM DAMSO</title>
     <link rel="stylesheet" href="../static/stylealbum.css">
-</head>
-<body>
-    <form action="/home" method="GET">
-    <button>HOME</button>
-    </form>
-    <h1>ALBUM DAMSO (Total: {{.Total}})</h1>
+    <link rel="stylesheet" href="../static/stylecommon.css">
 
-    <div class="conteneur-albums" >
-        {{ range .Items }}
-        <div class="element-album">
-            <h2>Album: {{.Name}}</h2>
-                {{ with index .Images 1 }}
-                <div style="margin-bottom: 15px;">
-                    <img src="{{.URL}}" alt="Pochette d'album">                
-                </div>
-                {{ end }}   
-                <P>Date de sortie: {{.ReleaseDate}}</P>
-                <P>Nombres de chansons: {{.TotalTracks}}</P>
-                
-        </div>       
-        {{ end }}
-        
+</head>
+
+<body>
+    <nav class="menu-horizontale">
+        <div class="bloc-menu">
+            <form action="/home" method="GET">
+                <button>HOME</button>
+            </form>
+            <form action="/album/damso" method="GET">
+                <button>ALBUM DAMSO</button>
+            </form>
+            <form action="/tracks/laylow" method="GET">
+                <button>TRACKS LAYLOW</button>
+            </form>
+        </div>
+    </nav>
+    <div class="title">
+        <h1>ALBUM DAMSO</h1>
+        <p>Nombre de chansons actuelle : {{.Total}}</p>
     </div>
-    </body>
+    <div class="conteneur-albums">
+        {{ range .Items }}
+        <div class="cadre-album">
+
+            {{ with index .Images 1 }}
+            <div class="cover-album">
+                <img src="{{.URL}}" alt="Pochette d'album">
+            </div>
+            {{ end }}
+            <div class="info-album">
+                <h2 class="titre-album">{{.Name}}</h2>
+                <P class="artiste">Par {{(index .Artist 0).Name}}</P>
+                <p class="date-album">{{.ReleaseDate}}</p>
+                <div class="chanson-num">
+                    <span class="nombre-chansons">chansons: {{.TotalTracks}}</span>
+                </div>
+            </div>
+        </div>
+        {{ end }}
+
+    </div>
+</body>
+
 </html>

@@ -4,13 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TRACK LAYLOW</title>
+    <link rel="stylesheet" href="../static/styletracks.css">
+    <link rel="stylesheet" href="../static/stylecommon.css">
 </head>
 <body>
-    <form action="/home" method="GET">
-    <button>HOME</button>
-    </form>
-    <h1>MALADRESSE INFO</h1>
-    <h2>track Info</h2>
+    <nav class="menu-horizontale">
+        <div class="bloc-menu">
+            <form action="/home" method="GET">
+                <button>HOME</button>
+            </form>
+            <form action="/album/damso" method="GET">
+                <button>ALBUM DAMSO</button>
+            </form>
+            <form action="/tracks/laylow" method="GET">
+                <button>TRACKS LAYLOW</button>
+            </form>
+        </div>
+    </nav>
+    <h2>Maladresse</h2>
     <div>
         <P>Nom de la chanson: {{.NameTrack}}</P>
         {{with index .Album.Images 0}}

@@ -9,6 +9,7 @@ func New() *http.ServeMux {
 	mux := http.NewServeMux()
 
 	//--- ROUTES ---
+	mux.HandleFunc("/", controller.Home)
 	mux.HandleFunc("/home", controller.Home)
 	mux.HandleFunc("/album/damso", controller.AlbumDamso)
 	mux.HandleFunc("/tracks/laylow", controller.TracksLaylow)
