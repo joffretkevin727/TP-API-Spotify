@@ -9,17 +9,23 @@
     <form action="/home" method="GET">
     <button>HOME</button>
     </form>
-    <form action="/album" method="GET">
-    <button>Back</button>
-    </form>
-    <h1>ALBUM DAMSO</h1>
-    {{ range .Album}}
-    <h2>Album Info</h2>
+    <h1>ALBUM DAMSO (Total: {{.Total}})</h1>
+
+    {{ range .Items }}
+
+    <h2>Album: {{.Name}}</h2>
     <div>
-        <P>{{.Name}}</P>
-        <P>{{.Cover}}</P>
-        <P>{{.Date}}</P>
-        <P>{{.NumberTracks}}</P>
+        <P>Nom: {{.Name}}</P>
+        <P>Date de sortie: {{.ReleaseDate}}</P>
+        <P>Nombres de chansons: {{.TotalTracks}}</P>
+        <h3>Image:</h3>
+        {{ with index .Images 1 }}
+            <div style="margin-bottom: 15px;">
+                <img src="{{.URL}}" alt="Pochette d'album">
+                
+            </div>
+        {{ end }}
+        
     </div>
     {{ end }}
     </body>

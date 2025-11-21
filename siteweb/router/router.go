@@ -10,10 +10,8 @@ func New() *http.ServeMux {
 
 	//--- ROUTES ---
 	mux.HandleFunc("/home", controller.Home)
-	mux.HandleFunc("/album", controller.Album)
-	mux.HandleFunc("/albumdamso", controller.AlbumDamso)
-	mux.HandleFunc("/track", controller.Track)
-	mux.HandleFunc("/tracklaylow", controller.TrackLaylow)
+	mux.HandleFunc("/album/damso", controller.AlbumDamso)
+	mux.HandleFunc("/tracks/laylow", controller.TracksLaylow)
 	//--- ROUTES ---
 	return mux
 }
