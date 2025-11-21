@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ALBUM DAMSO</title>
+    <link rel="stylesheet" href="../static/stylealbum.css">
 </head>
 <body>
     <form action="/home" method="GET">
@@ -11,22 +12,21 @@
     </form>
     <h1>ALBUM DAMSO (Total: {{.Total}})</h1>
 
-    {{ range .Items }}
-
-    <h2>Album: {{.Name}}</h2>
-    <div>
-        <P>Nom: {{.Name}}</P>
-        <P>Date de sortie: {{.ReleaseDate}}</P>
-        <P>Nombres de chansons: {{.TotalTracks}}</P>
-        <h3>Image:</h3>
-        {{ with index .Images 1 }}
-            <div style="margin-bottom: 15px;">
-                <img src="{{.URL}}" alt="Pochette d'album">
+    <div class="conteneur-albums" >
+        {{ range .Items }}
+        <div class="element-album">
+            <h2>Album: {{.Name}}</h2>
+                {{ with index .Images 1 }}
+                <div style="margin-bottom: 15px;">
+                    <img src="{{.URL}}" alt="Pochette d'album">                
+                </div>
+                {{ end }}   
+                <P>Date de sortie: {{.ReleaseDate}}</P>
+                <P>Nombres de chansons: {{.TotalTracks}}</P>
                 
-            </div>
+        </div>       
         {{ end }}
         
     </div>
-    {{ end }}
     </body>
 </html>
