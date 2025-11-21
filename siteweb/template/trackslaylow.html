@@ -1,12 +1,17 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TRACK LAYLOW</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../static/styletracks.css">
     <link rel="stylesheet" href="../static/stylecommon.css">
+    
+
 </head>
+
 <body>
     <nav class="menu-horizontale">
         <div class="bloc-menu">
@@ -21,18 +26,23 @@
             </form>
         </div>
     </nav>
-    <h2>Maladresse</h2>
-    <div>
-        <P>Nom de la chanson: {{.NameTrack}}</P>
-        {{with index .Album.Images 0}}
-        <img src="{{.ImageURL}}" alt="Pochette d'album">
-        {{end}}
-        {{with index .Album.Artists 0}}
-        <P>Artiste: {{ .ArtistName }}</P>
-        {{end}}
-        <P>Album: {{.Album.NameAlbum}} (sortie le {{.Album.ReleaseDate}})</P>
-        <P>Lien: <a href="{{.ExternalUrl.LinkSpotify}}">Écouter sur Spotify</a></P>
+    <div class="cadre-chanson-info">
+        <div class="cover-image">
+            {{with index .Album.Images 0}}
+            <img src="{{.ImageURL}}" alt="Pochette d'album">
+            {{end}}
+        </div>
+        <div class="info-chanson">
+            <h2>{{.NameTrack}}</h2>
+            {{with index .Album.Artists 0}}
+            <P>Artiste: {{ .ArtistName }}</P>
+            {{end}}
+            <P>Album: {{.Album.NameAlbum}}</P>
+            <p>Sortie le {{.Album.ReleaseDate}}</p>
+            <P><a href="{{.ExternalUrl.LinkSpotify}}">aller à SPOTIFY</a></P>
+        </div>
     </div>
-    
-    </body>
+
+</body>
+
 </html>
