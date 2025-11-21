@@ -10,20 +10,19 @@ import (
 	"time"
 )
 
-// token info
+// LES DONNEES DU TOKEN
 type TokenData struct {
 	AccessToken string `json:"access_token"`
 	TokenType   string `json:"token_type"`
 	ExpiresIn   int    `json:"expires_in"`
 }
 
-// AlbumListe
+// ----------- LES DONNEES DES ALBUM--------------
 type AlbumList struct {
 	Total int     `json:"total"`
 	Items []Album `json:"items"`
 }
 
-// Album info
 type Album struct {
 	Artist []struct {
 		Name string `json:"name"`
@@ -34,18 +33,18 @@ type Album struct {
 	Images      []Image `json:"images"`
 }
 
-// image info
 type Image struct {
 	URL    string `json:"url"`
 	Height int    `json:"height"`
 	Width  int    `json:"width"`
 }
 
-// TrackInfo corrigée pour décoder correctement les champs racine.
-type TrackInfo struct {
-	NameTrack string `json:"name"` // Nom de la piste (champ racine)
+//------------------------------------------------
 
-	// Le lien Spotify de la piste est dans 'external_urls' au niveau racine
+// ------- LES INFO DE LA CHANSON MALADRESSE-------
+type TrackInfo struct {
+	NameTrack string `json:"name"`
+
 	ExternalUrl struct {
 		LinkSpotify string `json:"spotify"`
 	} `json:"external_urls"`
@@ -54,7 +53,6 @@ type TrackInfo struct {
 		NameAlbum   string `json:"name"`
 		ReleaseDate string `json:"release_date"`
 
-		// J'ai renommé 'Artist' en 'Artists' pour correspondre au tag JSON 'artists'
 		Artists []struct {
 			ArtistName string `json:"name"`
 		} `json:"artists"`
@@ -62,18 +60,17 @@ type TrackInfo struct {
 		Images []struct {
 			ImageURL string `json:"url"`
 		} `json:"images"`
-
-		// Le lien album est optionnel ici, mais il existe (external_urls)
-		// Pas besoin de le mapper si vous ne voulez que le lien de la piste.
 	} `json:"album"`
 }
 
-// renvoie le token d'accès en string
+// ------------------------------------------------
+
+// RECUPERE LE TOKEN NECESSAIRE A Apidamso() et ApiLaylow()
 func GetToken() string {
 	httpClient := http.Client{
 		Timeout: time.Second * 15,
 	}
-	//Partie faite a l'IA
+	//CETTE PARTIE VA CONSTRUIRE LE LIEN DE LA REQUETE POST
 	payload := strings.NewReader("grant_type=client_credentials")
 	req, errReq := http.NewRequest(http.MethodPost, "https://accounts.spotify.com/api/token?grant_type=client_credentials&client_id=c2c125d4756c4d8692282454614ca245&client_secret=b6385721a0b54f268f37f939f13e442e", payload)
 	authString := base64.StdEncoding.EncodeToString([]byte("c2c125d4756c4d8692282454614ca245" + ":" + "b6385721a0b54f268f37f939f13e442e"))
@@ -103,7 +100,7 @@ func GetToken() string {
 	return tokenData.AccessToken
 }
 
-// interroge la BDD Spotify et renvoie les albums
+// INTERROGE LA BDD SPOTIFY ET RENVOIE LA LISTE D'ALBUMS DE DAMSO
 func ApiDamso(urlapi string, token string) (AlbumList, error) {
 
 	//init client HTTP
@@ -111,14 +108,14 @@ func ApiDamso(urlapi string, token string) (AlbumList, error) {
 		Timeout: time.Second * 15,
 	}
 
-	//la requetes HTTP
+	//la requetes GET HTTP
 	req, errReq := http.NewRequest(http.MethodGet, urlapi, nil)
 
 	if errReq != nil {
 		fmt.Println("Oupss, une erreur est survenue:", errReq.Error())
 	}
 
-	// Ajout d'une métadonnée dans le header de la requête HTTP
+	// Ajout du token le header de la requête HTTP
 	req.Header.Add("Authorization", "Bearer "+token)
 
 	// Execution de la requête HTTP
@@ -153,7 +150,7 @@ func ApiDamso(urlapi string, token string) (AlbumList, error) {
 	return albumData, nil
 }
 
-// interroge la BDD Spotify et renvoie les albums
+// INTERROGE LA BDD SPOTIFY ET RENVOIE LES INFO DE LA CHANSON MALADRESSE
 func ApiLaylow(urlapi string, token string) (TrackInfo, error) {
 
 	//init client HTTP
@@ -161,14 +158,14 @@ func ApiLaylow(urlapi string, token string) (TrackInfo, error) {
 		Timeout: time.Second * 15,
 	}
 
-	//la requetes HTTP
+	//la requete GET HTTP
 	req, errReq := http.NewRequest(http.MethodGet, urlapi, nil)
 
 	if errReq != nil {
 		fmt.Println("Oupss, une erreur est survenue:", errReq.Error())
 	}
 
-	// Ajout d'une métadonnée dans le header de la requête HTTP
+	// Ajout du token dans le header de la requête HTTP
 	req.Header.Add("Authorization", "Bearer "+token)
 
 	// Execution de la requête HTTP

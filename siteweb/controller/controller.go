@@ -7,6 +7,7 @@ import (
 	"net/http"
 )
 
+// CETTE FONCTION REND UN TEMPLATE AVEC DES DONNEES ET L'ECRIT DANS LA REPONSE HTTP
 func RenderTemplate(w http.ResponseWriter, filename string, data interface{}) {
 	template := template.Must(template.ParseFiles("template/" + filename))
 
@@ -18,6 +19,7 @@ func RenderTemplate(w http.ResponseWriter, filename string, data interface{}) {
 	w.Write(buf.Bytes())
 }
 
+// LA FONCTION GERE L'AFFICHAGE DE HOME
 func Home(w http.ResponseWriter, r *http.Request) {
 
 	if r.Method != http.MethodGet {
@@ -27,6 +29,7 @@ func Home(w http.ResponseWriter, r *http.Request) {
 	RenderTemplate(w, "home.html", nil)
 }
 
+// LA FONCTION GERE L'AFFICHAGE DES ALBUMS DE DAMSO
 func AlbumDamso(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodGet {
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
@@ -42,6 +45,8 @@ func AlbumDamso(w http.ResponseWriter, r *http.Request) {
 	RenderTemplate(w, "albumdamso.html", albumData)
 
 }
+
+// LA FONCTION GERE L'AFFICHAGE DE LA CHANSON MALADRESSE DE LAYLOW
 func TracksLaylow(w http.ResponseWriter, r *http.Request) {
 
 	if r.Method != http.MethodGet {
