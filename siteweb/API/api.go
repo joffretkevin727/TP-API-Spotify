@@ -38,6 +38,33 @@ type Image struct {
 	Width  int    `json:"width"`
 }
 
+// TrackInfo corrigée pour décoder correctement les champs racine.
+type TrackInfo struct {
+	NameTrack string `json:"name"` // Nom de la piste (champ racine)
+
+	// Le lien Spotify de la piste est dans 'external_urls' au niveau racine
+	ExternalUrl struct {
+		LinkSpotify string `json:"spotify"`
+	} `json:"external_urls"`
+
+	Album struct {
+		NameAlbum   string `json:"name"`
+		ReleaseDate string `json:"release_date"`
+
+		// J'ai renommé 'Artist' en 'Artists' pour correspondre au tag JSON 'artists'
+		Artists []struct {
+			ArtistName string `json:"name"`
+		} `json:"artists"`
+
+		Images []struct {
+			ImageURL string `json:"url"`
+		} `json:"images"`
+
+		// Le lien album est optionnel ici, mais il existe (external_urls)
+		// Pas besoin de le mapper si vous ne voulez que le lien de la piste.
+	} `json:"album"`
+}
+
 // renvoie le token d'accès en string
 func GetToken() string {
 	httpClient := http.Client{
@@ -121,4 +148,54 @@ func ApiDamso(urlapi string, token string) (AlbumList, error) {
 	fmt.Println("Affichage des données de l'API Spotify")
 
 	return albumData, nil
+}
+
+// interroge la BDD Spotify et renvoie les albums
+func ApiLaylow(urlapi string, token string) (TrackInfo, error) {
+
+	//init client HTTP
+	httpClient := http.Client{
+		Timeout: time.Second * 15,
+	}
+
+	//la requetes HTTP
+	req, errReq := http.NewRequest(http.MethodGet, urlapi, nil)
+
+	if errReq != nil {
+		fmt.Println("Oupss, une erreur est survenue:", errReq.Error())
+	}
+
+	// Ajout d'une métadonnée dans le header de la requête HTTP
+	req.Header.Add("Authorization", "Bearer "+token)
+
+	// Execution de la requête HTTP
+
+	res, errResp := httpClient.Do(req)
+
+	if errResp != nil {
+		fmt.Println("Oupss, une erreur est survenue lors de l'exécution: %w", errResp)
+		return TrackInfo{}, errResp
+	}
+	if res.Body != nil {
+		defer res.Body.Close()
+	}
+
+	fmt.Println("Statut de la réponse de l'API Spotify :", res.Body)
+
+	// Lecture et récupération du corps de la requête HTTP
+
+	body, errBody := io.ReadAll(res.Body)
+	fmt.Println(io.ReadAll(res.Body))
+
+	if errBody != nil {
+
+		fmt.Println("Oupss, une erreur est survenue", errBody.Error())
+	}
+
+	var Maladresse TrackInfo
+
+	json.Unmarshal(body, &Maladresse)
+	fmt.Println("Affichage des données de l'API Spotify")
+
+	return Maladresse, nil
 }

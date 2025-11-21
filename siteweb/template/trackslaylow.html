@@ -12,14 +12,16 @@
     <h1>MALADRESSE INFO</h1>
     <h2>track Info</h2>
     <div>
-        {{ range .Track}}
-        <P>{{.Title}}</P>
-        <P>{{.CoverAlbum}}</P>
-        <P>{{.NameAlbum}}</P>
-        <P>{{.NameArtist}}</P>
-        <P>{{.Date}}</P>
-        <P>{{.Link}}</P>
+        <P>Nom de la chanson: {{.NameTrack}}</P>
+        {{with index .Album.Images 0}}
+        <img src="{{.ImageURL}}" alt="Pochette d'album">
+        {{end}}
+        {{with index .Album.Artists 0}}
+        <P>Artiste: {{ .ArtistName }}</P>
+        {{end}}
+        <P>Album: {{.Album.NameAlbum}} (sortie le {{.Album.ReleaseDate}})</P>
+        <P>Lien: <a href="{{.ExternalUrl.LinkSpotify}}">Écouter sur Spotify</a></P>
     </div>
-    {{ end }}
+    
     </body>
 </html>

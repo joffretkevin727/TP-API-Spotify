@@ -48,6 +48,13 @@ func TracksLaylow(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 		return
 	}
+	trackUrl := "https://api.spotify.com/v1/tracks/0nAHBAlzkyaQXUp7qTULqv"
+	trackData, err := api.ApiLaylow(trackUrl, api.GetToken())
 
-	//RenderTemplate(w, "tracks/laylow.html", api.TrackList)
+	if err != nil {
+		http.Error(w, "Erreur lors de l'appel API: %v", http.StatusInternalServerError)
+		return
+	}
+
+	RenderTemplate(w, "trackslaylow.html", trackData)
 }
