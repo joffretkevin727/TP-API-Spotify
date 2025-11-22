@@ -8,7 +8,7 @@
 	},
 	"item": [
 		{
-			"name": "Damso",
+			"name": "access_token",
 			"request": {
 				"auth": {
 					"type": "bearer",
@@ -16,6 +16,63 @@
 						{
 							"key": "token",
 							"value": "BQBpKLinOTxZVpNOecd4DAAD6erlzsAut0kfm6NjQjYccG8H7r9YzNaEy_GG3ZTg2QpcXNDxLfsKeUct9Ufuplivtvfs2bM-EfS5aEfsY6QKKc7YTaOX0R3PQQv8CMlno3lQVowsGGg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					},
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "https://accounts.spotify.com/api/token?grant_type=client_credentials&client_id=c2c125d4756c4d8692282454614ca245&client_secret=b6385721a0b54f268f37f939f13e442e",
+					"protocol": "https",
+					"host": [
+						"accounts",
+						"spotify",
+						"com"
+					],
+					"path": [
+						"api",
+						"token"
+					],
+					"query": [
+						{
+							"key": "grant_type",
+							"value": "client_credentials"
+						},
+						{
+							"key": "client_id",
+							"value": "c2c125d4756c4d8692282454614ca245"
+						},
+						{
+							"key": "client_secret",
+							"value": "b6385721a0b54f268f37f939f13e442e"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Damso",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{Token}}",
 							"type": "string"
 						}
 					]
@@ -56,7 +113,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "BQAsMz2iUHJtFbvViwMlGc4vOAuhMllgxyrfAQ0GcvEFuh4MX3q20FOxSUCVYMK7xqgsuN0g1wlEZ0hrRGBUO50ybDYFd8DiZto3DF2GzedC1_h3KlkMZIbUNnK4XMmNaRXATu-uNmY",
+							"value": "{{Token}}",
 							"type": "string"
 						}
 					]
@@ -161,13 +218,111 @@
 				"header": []
 			},
 			"response": []
+		},
+		{
+			"name": "hugo decrypte",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "BQAsMz2iUHJtFbvViwMlGc4vOAuhMllgxyrfAQ0GcvEFuh4MX3q20FOxSUCVYMK7xqgsuN0g1wlEZ0hrRGBUO50ybDYFd8DiZto3DF2GzedC1_h3KlkMZIbUNnK4XMmNaRXATu-uNmY",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/v1/shows/6y1PloEyNsCNJH9vHias4T",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"v1",
+						"shows",
+						"6y1PloEyNsCNJH9vHias4T"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "hugo decrypte 3 derniere actus",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "BQAsMz2iUHJtFbvViwMlGc4vOAuhMllgxyrfAQ0GcvEFuh4MX3q20FOxSUCVYMK7xqgsuN0g1wlEZ0hrRGBUO50ybDYFd8DiZto3DF2GzedC1_h3KlkMZIbUNnK4XMmNaRXATu-uNmY",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/v1/episodes?ids=7An7N5X9C50blMLAir8eOR,6oCwS0PfuHQGtA3ZN3kFjg,0FshpdhUKaFZUv30hOdJb1",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"v1",
+						"episodes"
+					],
+					"query": [
+						{
+							"key": "ids",
+							"value": "7An7N5X9C50blMLAir8eOR,6oCwS0PfuHQGtA3ZN3kFjg,0FshpdhUKaFZUv30hOdJb1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "hugo 2eme actus",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
 		}
 	],
 	"variable": [
 		{
 			"key": "baseURL",
-			"value": "",
-			"type": "default"
+			"value": ""
+		},
+		{
+			"key": "Token",
+			"value": ""
 		}
 	]
 }
